@@ -5,6 +5,16 @@
 # Dependencies
 node_modules/
 
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+
+# Front-end build output
+dist/
+
 # OS / editor junk
 .DS_Store
 Thumbs.db

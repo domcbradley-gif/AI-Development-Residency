@@ -1,0 +1,12 @@
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+# B008: calling Depends() in argument defaults is the intended FastAPI pattern.
+ignore = ["B008"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]

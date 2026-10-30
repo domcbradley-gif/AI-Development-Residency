@@ -1,0 +1,45 @@
+name: CI
+
+# Lint, test, and build-check the Week 3 slice. Free GitHub Actions CI.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  api:
+    name: API — lint & test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Week3/api
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements-dev.txt
+      - name: Lint
+        run: ruff check .
+      - name: Test (SQLite, no Postgres needed)
+        env:
+          DATABASE_URL: sqlite+pysqlite:///:memory:
+          DATA_MODE: synthetic
+        run: pytest
+
+  web:
+    name: Web — lint & build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Week3/web
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm install
+      - name: Lint
+        run: npm run lint
+      - name: Build
+        run: npm run build

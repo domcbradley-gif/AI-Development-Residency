@@ -1,0 +1,50 @@
+# Three-tier stack for slice 1. `docker compose up` runs all three tiers locally
+# on synthetic data. Portable by design (Postgres + standard images, no
+# proprietary APIs) so it can re-home to a community-controlled host later.
+#
+# Secrets come from a local .env file (copy Week3/.env.example -> Week3/.env).
+# Nothing secret is committed.
+
+services:
+  # Tier 3 — Data
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # Tier 2 — Application (API & business logic)
+  api:
+    build: ./api
+    environment:
+      # Connection string assembled from the same secrets as the db service.
+      DATABASE_URL: postgresql+psycopg://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
+      DATA_MODE: synthetic
+      WEB_ORIGIN: http://localhost:5173
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+
+  # Tier 1 — Presentation (resident / web client)
+  web:
+    build: ./web
+    environment:
+      # The browser talks to the API on the host-published port.
+      VITE_API_URL: http://localhost:8000
+    depends_on:
+      - api
+    ports:
+      - "5173:5173"
+
+volumes:
+  db_data:
