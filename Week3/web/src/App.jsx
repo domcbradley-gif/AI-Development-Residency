@@ -5,16 +5,18 @@ import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import ContributionForm from "./components/ContributionForm.jsx";
 import ContributionList from "./components/ContributionList.jsx";
-import { getProvisionalConfig, listContributions } from "./api.js";
+import { listContributions } from "./api.js";
+import { PROVISIONAL_LABEL, TOPIC_ALLOWLIST } from "./config.js";
 
 export default function App() {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [topics, setTopics] = useState([]);
-  const [provisionalLabel, setProvisionalLabel] = useState(
-    "provisional — not set by the community",
-  );
+
+  // Provisional, community-owned values are client-side config now (there is no
+  // API tier to fetch them from). They stay clearly labelled as provisional.
+  const topics = TOPIC_ALLOWLIST;
+  const provisionalLabel = PROVISIONAL_LABEL;
 
   const refresh = useCallback(async () => {
     setLoading(true);
@@ -30,12 +32,6 @@ export default function App() {
 
   useEffect(() => {
     refresh();
-    getProvisionalConfig()
-      .then((cfg) => {
-        setTopics(cfg.topics ?? []);
-        if (cfg.label) setProvisionalLabel(cfg.label);
-      })
-      .catch(() => setTopics([]));
   }, [refresh]);
 
   return (

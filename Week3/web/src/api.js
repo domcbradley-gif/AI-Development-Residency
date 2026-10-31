@@ -1,39 +1,37 @@
-// Thin API client for Tier 2. The base URL is injected via VITE_API_URL so the
-// client stays portable; it defaults to the local docker-compose API.
-const BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
+// Data access for the resident capture slice. The front end now talks directly
+// to Supabase (Postgres + Row Level Security) via @supabase/supabase-js — there
+// is no FastAPI tier in the deployed path. RLS allows anonymous SELECT and
+// INSERT only; UPDATE/DELETE are denied server-side.
 
-async function parseError(response) {
-  // Surface a clean, specific message without leaking server internals.
-  try {
-    const data = await response.json();
-    if (Array.isArray(data?.detail) && data.detail[0]?.msg) {
-      return data.detail[0].msg;
-    }
-    if (typeof data?.detail === "string") return data.detail;
-  } catch {
-    /* fall through to generic message */
-  }
-  return "Something went wrong. Please try again.";
-}
+import { supabase } from "./supabaseClient.js";
+import { PROJECTION, buildInsertRow } from "./contributions.js";
+
+// User-facing error messages never echo server internals (per input-validation).
+const LOAD_ERROR = "We couldn't load the record just now. Please try again.";
+const SAVE_ERROR = "We couldn't save your note just now. Please try again.";
 
 export async function listContributions() {
-  const response = await fetch(`${BASE_URL}/contributions`);
-  if (!response.ok) throw new Error(await parseError(response));
-  return response.json();
+  const { data, error } = await supabase
+    .from("contributions")
+    .select(PROJECTION)
+    .order("created_at", { ascending: false });
+
+  if (error) throw new Error(LOAD_ERROR);
+  return data ?? [];
 }
 
-export async function createContribution({ body, topic }) {
-  const response = await fetch(`${BASE_URL}/contributions`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ body, topic: topic || null }),
-  });
-  if (!response.ok) throw new Error(await parseError(response));
-  return response.json();
-}
+export async function createContribution(input) {
+  // Validate + shape at the client boundary (UX). Postgres CHECK + RLS are the
+  // authoritative server-side guards. buildInsertRow throws its own clean,
+  // specific message for invalid input; let that surface to the user.
+  const row = buildInsertRow(input);
 
-export async function getProvisionalConfig() {
-  const response = await fetch(`${BASE_URL}/config/provisional`);
-  if (!response.ok) throw new Error(await parseError(response));
-  return response.json();
+  const { data, error } = await supabase
+    .from("contributions")
+    .insert(row)
+    .select(PROJECTION)
+    .single();
+
+  if (error) throw new Error(SAVE_ERROR);
+  return data;
 }

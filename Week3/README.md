@@ -1,106 +1,111 @@
 # Week 3 — Community-Governed Data (slice 1)
 
-A thin, end-to-end slice of the accountability app. It stands up the **three-tier
-skeleton** and delivers the first piece of Week 3's *"resident capture & the
-record"*: a resident submits an **anonymous text contribution** about their
-housing, it is stored, and the community record is shown back.
+A thin, end-to-end slice of the accountability app: a resident submits an
+**anonymous text contribution** about their housing, it is stored, and the
+community record is shown back.
 
 **Everything here is synthetic data only.** There is no code path that accepts
-real resident data — the app refuses to start unless `DATA_MODE=synthetic`.
+real resident data: anonymous inserts are constrained to `synthetic = true` by a
+Row Level Security policy, and the UI says so throughout.
 
-## Architecture (three tiers, portable by design)
+## Architecture (Supabase + Vercel)
 
-| Tier | Tech | Folder |
-|------|------|--------|
-| 1 — Presentation | Vite + React + Material UI | [`web/`](web/) |
-| 2 — Application | Python + FastAPI (REST/JSON) | [`api/`](api/) |
-| 3 — Data | Postgres, schema/migrations in code (Alembic) | [`api/alembic/`](api/alembic/) |
+The deployed app is a **Vite + React + Material UI** front end that talks
+**directly to Supabase** (Postgres + Row Level Security) via
+`@supabase/supabase-js`. There is no application server to run or host.
 
-The slice is portable: Postgres + standard images, no proprietary APIs, so it
-can re-home to a community-controlled host later.
+| Concern | Where it lives |
+|---------|----------------|
+| Presentation | Vite + React + MUI in [`web/`](web/), deployed on **Vercel** |
+| Data + access rules | **Supabase** (Postgres, RLS, CHECK constraints) — [`supabase/schema.sql`](supabase/schema.sql) |
 
-## Run the whole stack (recommended)
+> **Legacy:** the previous FastAPI + Docker stack ([`api/`](api/),
+> [`docker-compose.yml`](docker-compose.yml)) is **retired from the deployed
+> path**. The code is kept for reference and still has its own CI job, but it is
+> not part of the deployed app.
 
-Requires Docker Desktop (Docker + Docker Compose).
+## Deploy
 
-```bash
-cd Week3
-cp .env.example .env        # local, synthetic-only credentials — never commit .env
-docker compose up --build
-```
+### 1. Set up Supabase (the backend)
 
-Then open:
+1. Create a project at [supabase.com](https://supabase.com).
+2. Open **SQL Editor → New query**, paste the whole of
+   [`supabase/schema.sql`](supabase/schema.sql), and **Run**. That creates the
+   `contributions` table, the body-length CHECK constraint, enables RLS, adds the
+   anonymous SELECT/INSERT policies (no UPDATE/DELETE), and loads a few synthetic
+   seed rows. It is safe to re-run.
+3. From **Project Settings → API**, copy the **Project URL** and the **anon /
+   public** key. (Never copy the `service_role` key into this app.)
 
-- Web client: http://localhost:5173
-- API docs:   http://localhost:8000/docs
+### 2. Deploy the front end on Vercel
 
-On start the API applies migrations, seeds synthetic contributions, and serves.
-A contribution submitted in the UI round-trips through all three tiers and
-appears in "The community record".
+1. Import this Git repo into Vercel.
+2. Set **Root Directory** to `Week3/web`. Vercel auto-detects the Vite preset
+   (build `npm run build`, output `dist`); `web/vercel.json` pins this too.
+3. Add these **Environment Variables** (Production + Preview):
 
-## Run a tier on its own (no Docker)
+   | Name | Value |
+   |------|-------|
+   | `VITE_SUPABASE_URL` | your Supabase **Project URL** |
+   | `VITE_SUPABASE_ANON_KEY` | your Supabase **anon / public** key |
 
-### API (Tier 2 + 3)
+4. Deploy. Submitting a note in the UI inserts into Supabase and appears in
+   "The community record".
 
-```bash
-cd Week3/api
-python -m venv .venv && . .venv/Scripts/activate   # Windows; use bin/activate on macOS/Linux
-pip install -r requirements-dev.txt
+> Both env vars are **public by design** — the anon key is a publishable key and
+> access is controlled by RLS. They are still read from the environment (never
+> hardcoded), and real values stay out of git.
 
-# Point at any Postgres; or use SQLite for a quick spin:
-export DATABASE_URL="postgresql+psycopg://user:pass@localhost:5432/accountability"
-export DATA_MODE=synthetic
-alembic upgrade head
-python seed.py
-uvicorn app.main:app --reload
-```
-
-### Web (Tier 1)
+## Run locally
 
 ```bash
 cd Week3/web
+cp .env.example .env     # then fill in VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY
 npm install
-VITE_API_URL=http://localhost:8000 npm run dev
+npm run dev              # http://localhost:5173
 ```
 
-## Tests, lint, CI
+Point it at the same Supabase project you set up above (or a separate dev
+project). No local database or API is required.
+
+## Tests, lint, build
 
 ```bash
-# API
-cd Week3/api
-DATABASE_URL="sqlite+pysqlite:///:memory:" DATA_MODE=synthetic pytest
-ruff check .
-
-# Web
 cd Week3/web
 npm run lint
+npm test                 # anonymity rail (vitest) — pure, no network/env needed
 npm run build
 ```
 
-CI (GitHub Actions, `.github/workflows/ci.yml`) runs all of the above on every
-push and PR. The API tests run against in-memory SQLite, so CI needs no database.
+CI (GitHub Actions, `.github/workflows/ci.yml`) runs lint + test + build for the
+web app on every push and PR. The legacy API job still lint/tests `api/`.
 
-## Safety rails baked into slice 1
+## Safety rails (re-expressed for Supabase)
 
-- **Anonymity by default** — the `contributions` table has no identifying columns
-  (no resident id, name, email, IP, or session). The API never reads or logs the
-  client IP. `tests/test_anonymity.py` fails if an identifying column is added.
-- **Synthetic-only, enforced in code** — `app/synthetic.py` refuses to start the
-  app for any `DATA_MODE` other than `synthetic`. No real-data path exists.
-- **Externalized, provisional config** — community-owned values (topic allowlist,
-  body limit, aggregation threshold) live in `app/config.py`, each labeled
-  *"provisional — not set by the community."* The UI shows that label.
-- **Input validation at the trust boundary** — the API validates every field,
-  uses an allowlist for `topic`, rejects unknown fields (so a client can't smuggle
-  in an identifying field), and uses parameterized queries via SQLAlchemy.
-- **Secrets as env vars only** — no secret is committed; see `.env.example`.
-- **Accessibility (WCAG 2.2 AA)** — semantic HTML, labelled controls, a skip link,
-  visible keyboard focus, live-region announcements for results, AA-contrast
-  colors, and `prefers-reduced-motion` honored.
+- **Anonymity by default** — the `contributions` table has **no identifying
+  columns** (no resident id, name, email, phone, address, IP, device/session id).
+  `web/src/anonymity.test.js` fails if the client's read projection or insert
+  payload could ever carry an identity field.
+- **Synthetic-only** — a `synthetic boolean not null default true` column, and an
+  RLS policy that only allows anonymous inserts where `synthetic is true`. The UI
+  keeps the "practice environment / all data synthetic" and "anonymous" messaging.
+- **Validation at the trust boundary** — body length **1–5000** enforced both
+  client-side (UX) and as a Postgres **CHECK constraint** (authoritative). The
+  topic allowlist is **provisional client-side config** in `web/src/config.js`,
+  labelled *"provisional — not set by the community"* and deliberately **not**
+  hardcoded in the database.
+- **Row Level Security** — RLS is enabled; anonymous **SELECT** and **INSERT**
+  are allowed, **UPDATE/DELETE are denied** (no policy + explicit `REVOKE`).
+  Resident export/delete stays deferred.
+- **Secrets as env vars only** — Supabase config is read from
+  `VITE_SUPABASE_URL` / `VITE_SUPABASE_ANON_KEY`; see `web/.env.example`. No real
+  values committed; the `service_role` key is never used client-side.
+- **Accessibility (WCAG 2.2 AA)** — semantic HTML, labelled controls, a skip
+  link, visible focus, live-region announcements, AA-contrast colors, and
+  `prefers-reduced-motion` honored.
 
 ## Deferred to later slices (on the backlog)
 
 Audio/video capture · resident export & delete · official-record ingestion &
 the reported-vs-lived gap · the independent community body · warrant issuance /
-revocation · provider onboarding & funding discipline · free-host deployment &
-object storage (R2/MinIO).
+revocation · provider onboarding & funding discipline · authenticated roles.

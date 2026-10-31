@@ -7,8 +7,10 @@ import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { createContribution } from "../api.js";
+import { MAX_BODY_LENGTH as MAX_BODY } from "../config.js";
 
-const MAX_BODY = 5000; // mirrors the server's provisional limit (client UX only).
+// MAX_BODY mirrors the Postgres CHECK constraint (client UX only; the DB is
+// authoritative). Single source of truth lives in config.js.
 
 // Resident capture form. Anonymous by default — we never ask for any identity.
 export default function ContributionForm({ topics, provisionalLabel, onSubmitted }) {

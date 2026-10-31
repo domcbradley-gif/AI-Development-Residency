@@ -60,7 +60,7 @@ export default function ContributionList({ items, loading, error }) {
                   <Typography variant="caption" color="text.secondary">
                     {formatDate(item.created_at)}
                   </Typography>
-                  {item.is_synthetic && (
+                  {item.synthetic && (
                     <Chip
                       label="synthetic"
                       size="small"
