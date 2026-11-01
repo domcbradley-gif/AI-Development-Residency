@@ -15,3 +15,6 @@ guidance you followed. If no skill applied, say so explicitly.
 ## Standards
 This is a three-tier project aiming for enterprise-ready software.
 Treat security and accessibility as first-class concerns, not afterthoughts.
+
+## Architecture Decision Records (ADRs)
+Read every ADR in docs/adr before making changes, and write a new ADR for every big decision.
