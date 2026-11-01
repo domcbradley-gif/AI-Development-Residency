@@ -1,47 +1,35 @@
 name: CI
 
-# Lint, test, and build-check the Week 3 slice. Free GitHub Actions CI.
+# Lint, test, and build-check the deployed app (Week4/web). Free GitHub Actions CI.
+# Runs on every push to main and on every pull request; a failure blocks the merge.
+#
+# NOTE: this replaces the earlier workflow that targeted Week3/ (the Vite web slice
+# and the now-retired FastAPI api tier). The live app is the Next.js app in
+# Week4/web, so CI now guards that.
 on:
   push:
     branches: [main]
   pull_request:
 
 jobs:
-  api:
-    name: API — lint & test
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: Week3/api
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-      - run: pip install -r requirements-dev.txt
-      - name: Lint
-        run: ruff check .
-      - name: Test (SQLite, no Postgres needed)
-        env:
-          DATABASE_URL: sqlite+pysqlite:///:memory:
-          DATA_MODE: synthetic
-        run: pytest
-
   web:
-    name: Web — lint & build
+    name: Web — lint, test & build
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: Week3/web
+        working-directory: Week4/web
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - run: npm install
+          cache: npm
+          cache-dependency-path: Week4/web/package-lock.json
+      - name: Install (clean, from lockfile)
+        run: npm ci
       - name: Lint
         run: npm run lint
-      - name: Test (anonymity rail — pure, no network)
+      - name: Test (unit + anonymity rail — pure, no network or secrets)
         run: npm test
-      - name: Build
+      - name: Build (no secrets needed; server client is null-safe without env)
         run: npm run build
