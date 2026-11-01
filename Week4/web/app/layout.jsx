@@ -2,6 +2,7 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { theme } from "./theme.js";
+import AppNav from "@/components/AppNav.jsx";
 
 export const metadata = {
   title: "Community record — share your housing experience",
@@ -19,6 +20,7 @@ export default function RootLayout({ children }) {
           <ThemeProvider theme={theme}>
             {/* CssBaseline normalizes styles and respects system color scheme. */}
             <CssBaseline />
+            <AppNav />
             {children}
           </ThemeProvider>
         </AppRouterCacheProvider>
