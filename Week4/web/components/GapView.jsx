@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 function residentLine(row) {
   if (row.residentCount === 0) return "No resident accounts on this topic yet.";
   if (row.masked) {
-    return `A few resident accounts on this topic (fewer than ${row.minDisplay}, exact number hidden to protect residents).`;
+    return `A few residents reported this (fewer than ${row.minDisplay}). The exact number is hidden to keep them safe.`;
   }
   const n = row.displayCount;
   return `${n} resident account${n === 1 ? "" : "s"} on this topic.`;
@@ -32,9 +32,8 @@ export default function GapView({ provider, rows, provisionalLabel }) {
             {provider.name} — the official record set beside what residents report.
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-            This is not a pass/fail score. It simply shows both sides and marks
-            where the official record and residents&rsquo; accounts disagree.
-            All data is synthetic.
+            This is not a score or a grade. It shows both sides and marks
+            where the official record and residents&rsquo; accounts don&rsquo;t agree. All data is made-up.
           </Typography>
 
           <Stack spacing={2}>

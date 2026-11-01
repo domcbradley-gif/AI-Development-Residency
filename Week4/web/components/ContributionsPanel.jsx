@@ -55,7 +55,7 @@ export default function ContributionsPanel() {
           Community record
         </Typography>
         <Typography color="text.secondary" sx={{ mb: 1 }}>
-          A space for residents to put the truth about their housing on the record —
+          A space for residents to put what their housing is really like on the record —
           owned by the community, not the funder.
         </Typography>
         <Box
@@ -69,8 +69,7 @@ export default function ContributionsPanel() {
             fontSize: "0.875rem",
           }}
         >
-          <strong>Practice environment.</strong> All data here is synthetic. There is
-          no way to enter real resident data in this phase.
+          <strong>Practice space.</strong> Everything here is made-up (test) data. You can&rsquo;t enter real resident data yet.
         </Box>
 
         <ContributionForm
