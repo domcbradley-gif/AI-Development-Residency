@@ -30,3 +30,6 @@ export const TOPIC_ALLOWLIST = [
 // the synthetic demo is legible; a real deployment would set it higher, and the
 // value belongs to the community, not the developer.
 export const GAP_MIN_DISPLAY_COUNT = 3;
+
+// Funding discipline — no single funder over this share of the budget (PROVISIONAL).
+export const FUNDER_CAP_FRACTION = 0.25;

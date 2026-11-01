@@ -33,6 +33,12 @@ export default function AppNav({ user }) {
         <Button component={Link} href="/warrants" color="inherit">
           Warrants
         </Button>
+        <Button component={Link} href="/provider" color="inherit">
+          Provider
+        </Button>
+        <Button component={Link} href="/funding" color="inherit">
+          Funding
+        </Button>
 
         {user ? (
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
