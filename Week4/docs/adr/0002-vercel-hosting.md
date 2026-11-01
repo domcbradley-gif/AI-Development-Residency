@@ -1,31 +1,38 @@
-# ADR 0002 — Host on Vercel
+# ADR-0002: Host on Vercel
 
-- Status: Accepted
-- Date: 2026-10-31
+- **Status:** Accepted — 2026-10-31
+- **Deciders:** Dominic Bradley (solo resident)
+- **Related:** ADR-0001, ADR-0003
 
 ## Context
 
 The app must be publicly reachable with minimal operational burden for a solo,
-part-time developer, and the build plan requires everything to run on free
-resources and stay portable. The earlier plan considered self-hosting via Docker
-on Fly.io / Oracle Cloud; that carries real ops overhead (containers, a VM, a
-PaaS) for one person.
+part-time developer, on free resources, and stay portable. The earlier build plan
+considered self-hosting with Docker on Fly.io or Oracle Cloud.
+
+## Options
+
+1. **Vercel (free plan) — chosen.** Good: first-class, zero-config Next.js host;
+   automatic deploys on git push; environment variables managed in the dashboard;
+   free `*.vercel.app` URL. Bad: a managed platform (but lock-in is low — a
+   Next.js app runs on any Node host).
+2. **Self-host Docker on Fly.io / Oracle Cloud (original plan).** Good: full
+   control; container portability. Bad: real ops overhead for one person —
+   containers, a VM, a PaaS to maintain and patch.
+3. **Another static/Node host.** Good: possible. Bad: more configuration than
+   Vercel for a Next.js app, with no upside here.
 
 ## Decision
 
-Host the front end and its server runtime on **Vercel** (free plan), deploying
-from the GitHub repository. Vercel is the first-class host for Next.js: zero-
-config builds, automatic deploys on push, environment variables managed in the
-dashboard, and a free `*.vercel.app` URL.
+Host on Vercel, deploying from GitHub. This supersedes the Docker / Fly.io idea
+for the residency phase.
 
 ## Consequences
 
-- No servers to run or patch; deploys happen on git push.
-- Secrets (the Supabase URL and anon key) live in Vercel project env vars, never
-  in the repo.
-- This supersedes the Docker / Fly.io idea in the original build plan for the
-  residency phase. Portability is preserved because the app is standard Next.js +
-  Postgres with no Vercel-proprietary APIs, so it can re-home later.
-- Vendor consideration: Vercel is a managed platform. The lock-in is low (a
-  Next.js app runs on any Node host), and the data tier (the part that matters
-  for community ownership) is separate and portable (see ADR 0003).
+- **Easier:** no servers to run or patch; deploys happen on push; secrets live in
+  Vercel env vars, not the repo.
+- **Harder / accepted:** an external dependency on Vercel; mitigated because the
+  app is standard Next.js + Postgres with no Vercel-proprietary APIs, so it can
+  re-home later.
+- **Next:** point the Vercel project's root directory at `Week4/web`; set the
+  Supabase env vars.

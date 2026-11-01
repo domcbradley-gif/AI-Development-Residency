@@ -1,7 +1,8 @@
-# ADR 0003 — Supabase for Postgres, Auth, and Row Level Security
+# ADR-0003: Use Supabase for Postgres, Auth, and Row Level Security
 
-- Status: Accepted
-- Date: 2026-10-31
+- **Status:** Accepted — 2026-10-31
+- **Deciders:** Dominic Bradley (solo resident)
+- **Related:** ADR-0001, ADR-0002, ADR-0004
 
 ## Context
 
@@ -10,21 +11,26 @@ stay portable to a community-controlled host or data trust later. It also needs
 authentication for the roles that act (community-body members, providers) while
 keeping resident contributions anonymous.
 
+## Options
+
+1. **Supabase (free plan) — chosen.** Good: managed Postgres, built-in Auth, Row
+   Level Security as authoritative access control, and an open-source core that
+   re-homes to any Postgres. Bad: a managed vendor (but the core is open Postgres).
+2. **Self-hosted Postgres in Docker.** Good: full control. Bad: ops overhead, and
+   no managed auth — authentication would have to be built.
+3. **A proprietary backend-as-a-service (e.g. Firebase).** Good: easy auth. Bad:
+   non-relational, proprietary lock-in, and not portable to a community data trust.
+
 ## Decision
 
-Use **Supabase** (free plan): managed **Postgres** for storage, **Supabase Auth**
-(email/password) for sign-in, and **Row Level Security (RLS)** policies on every
-table as the authoritative access control. The browser and server talk to
-Supabase via `@supabase/ssr`; the public anon key ships to the browser and is
-gated entirely by RLS, while the service-role key is never used in the app.
+Use Supabase: Postgres for storage, Supabase Auth (email/password) for sign-in,
+and RLS policies on every table as the authoritative access control. Only the
+public anon key reaches the browser; the service-role key is never used in the app.
 
 ## Consequences
 
-- Access rules live in the database as RLS policies, enforced no matter which
-  client calls — defense in depth beyond the application tier.
-- Portability is preserved: Supabase's core is open-source Postgres, so schema +
-  migrations (kept in `supabase/migrations/`) re-home to any Postgres host.
-- Secrets discipline: only the public URL + anon key reach the browser; there is
-  no service-role key in the codebase.
-- Synthetic-only is enforced in the data tier (a `synthetic` column + insert
-  policies that reject non-synthetic rows), so no real-data path exists.
+- **Easier:** access rules enforced at the data tier no matter which client calls;
+  schema + migrations re-home to any Postgres.
+- **Harder / accepted:** a managed dependency; mitigated by Supabase's open core
+  and keeping migrations in the repo.
+- **Next:** keep SQL in `supabase/migrations/`; never ship the service-role key.
