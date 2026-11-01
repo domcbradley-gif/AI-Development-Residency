@@ -66,8 +66,7 @@ export default function ContributionForm({ topics, provisionalLabel, onSubmitted
         Share your experience
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        Your note is anonymous. We do not ask for your name and cannot trace it
-        back to you. This is a practice space — all data here is synthetic.
+        Your note is anonymous. We don&rsquo;t ask for your name, and no one can trace it back to you. This is a practice space, so all data is made-up.
       </Typography>
 
       <Box component="form" onSubmit={handleSubmit} noValidate>
@@ -120,7 +119,7 @@ export default function ContributionForm({ topics, provisionalLabel, onSubmitted
               onChange={(e) => setConsented(e.target.checked)}
             />
           }
-          label="I understand this is a practice space with synthetic data, and my note is submitted anonymously."
+          label="I understand this is a practice space with made-up data, and my note is sent without my name."
           sx={{ mb: 2, display: "block" }}
         />
 

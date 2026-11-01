@@ -37,9 +37,7 @@ export default function BodyView({
             </Typography>
           )}
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            Quorum to act: {body.quorum} members ({provisionalLabel}). Membership
-            is self-organized — people join themselves; no organization picks who
-            is on the body.
+            To act, the body needs {body.quorum} members ({provisionalLabel}). People join themselves — no organization picks who is on the body.
           </Typography>
 
           {user ? (
@@ -47,8 +45,8 @@ export default function BodyView({
               <Typography sx={{ mb: 2 }}>
                 <strong>{memberCount}</strong> member{memberCount === 1 ? "" : "s"}.{" "}
                 {memberCount >= body.quorum
-                  ? "Quorum is met — the body can issue a warrant."
-                  : `Quorum not yet met (needs ${body.quorum}).`}
+                  ? "Enough members have joined — the body can issue a warrant."
+                  : `Not enough members yet (needs ${body.quorum}).`}
               </Typography>
 
               {isMember ? (
