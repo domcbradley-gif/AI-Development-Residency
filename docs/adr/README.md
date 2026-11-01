@@ -13,3 +13,4 @@ in the format: Context → Decision → Consequences.
 | [0006](0006-mvp1-scope-primary-loop.md) | MVP #1 scope = the primary loop |
 | [0007](0007-stubs-for-light-tickets.md) | Minimal stubs for provider intake, outcomes, independence re-check |
 | [0008](0008-scoped-out-tickets.md) | Three tickets scoped out of MVP #1 for now |
+| [0009](0009-platform-web-app-pwa.md) | Platform: web app (PWA), not native/desktop |
