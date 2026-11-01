@@ -27,6 +27,9 @@ export default function AppNav({ user }) {
         <Button component={Link} href="/gap" color="inherit">
           The gap
         </Button>
+        <Button component={Link} href="/body" color="inherit">
+          Community body
+        </Button>
 
         {user ? (
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
