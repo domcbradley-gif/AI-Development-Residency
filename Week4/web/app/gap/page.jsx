@@ -3,14 +3,15 @@ import { computeGap } from "@/lib/gap.js";
 import { GAP_MIN_DISPLAY_COUNT, PROVISIONAL_LABEL } from "@/lib/config.js";
 import GapView from "@/components/GapView.jsx";
 
-// Reads live data per request (and would read the signed-in session), so it is
-// dynamic rather than statically prerendered.
+// Reads live data per request (and the signed-in session), so it is dynamic.
 export const dynamic = "force-dynamic";
 
 export default async function GapPage() {
   const supabase = getSupabaseServerClient();
+  if (!supabase) {
+    return <GapView provider={null} rows={[]} provisionalLabel={PROVISIONAL_LABEL} />;
+  }
 
-  // The demo provider (earliest-created). MVP #1 shows one provider.
   const { data: providers } = await supabase
     .from("providers")
     .select("id, name, description")
@@ -18,7 +19,6 @@ export default async function GapPage() {
     .limit(1);
 
   const provider = providers?.[0] ?? null;
-
   if (!provider) {
     return <GapView provider={null} rows={[]} provisionalLabel={PROVISIONAL_LABEL} />;
   }
@@ -28,7 +28,7 @@ export default async function GapPage() {
       .from("official_records")
       .select("category, reported_summary, source, record_date")
       .eq("provider_id", provider.id),
-    // Only the topic column is read — never any contribution body — and it is
+    // Only the topic column is read — never a contribution body — and it is
     // aggregated here on the server so raw accounts never reach the browser.
     supabase.from("contributions").select("topic"),
   ]);
@@ -39,7 +39,6 @@ export default async function GapPage() {
   }
 
   const rows = computeGap(official ?? [], topicCounts, GAP_MIN_DISPLAY_COUNT);
-
   return (
     <GapView provider={provider} rows={rows} provisionalLabel={PROVISIONAL_LABEL} />
   );
