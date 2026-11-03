@@ -196,11 +196,34 @@ palette: {
 
 ## Decision — fill in after the workshop
 
-- Chosen direction (or blend): __________
-- Blend notes: __________
-- Final name (post-clearance): __________
-- Display typeface locked + web-licensed: __________
-- Decided on / by: __________
+**Chosen direction**
+
+| Field | Value |
+| --- | --- |
+| Direction (A / B / C / blend) |  |
+| Blend notes |  |
+| Final name (post-clearance) |  |
+| Display typeface (locked + web-licensed) |  |
+| Decided on / by |  |
+
+**Before applying it — gates to clear**
+
+- [ ] Name clears trademark + domain
+- [ ] Display + body typefaces licensed for web
+- [ ] Usability-test findings folded into the spec
+- [ ] Palette re-verified for AA after the swap
+- [ ] Dark-theme decision made (build now or defer)
+
+**Workshop reactions** — one row per person per direction (A / B / C)
+
+| Participant | Dir | First feeling (1 word) | Safe & respected? | Accountable, not policing/pity? | Most / least "us"? |
+| --- | --- | --- | --- | --- | --- |
+|  |  |  |  |  |  |
+|  |  |  |  |  |  |
+|  |  |  |  |  |  |
+|  |  |  |  |  |  |
+|  |  |  |  |  |  |
+|  |  |  |  |  |  |
 
 ## Related
 
