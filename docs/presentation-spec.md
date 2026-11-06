@@ -75,6 +75,9 @@ screen by screen.
 
 ## 1. Community record — `/`
 
+> **Feed pattern (v2) + consent fix.** The record is a **reverse-chronological, card-based, identity-free feed** — note text first, with a topic chip, a relative timestamp (expose the exact date accessibly, not hover-only), and the practice-data chip. **Deliberately omitted:** avatars, names, reactions/likes, view or follower counts, algorithmic ranking, and infinite scroll — each conflicts with anonymity, dignity, or the "not a score" rule. Add a **topic filter** and a **"Load more"** control (or pagination), plus the designed empty state. **Consent fix:** the consent checkbox must not restate anonymity — the "Send anonymously" button already does, and anonymity is never optional. It carries the *made-up-data acknowledgment* instead ("I understand this is practice space with made-up data"). Once on real data, reconsider whether the checkbox is still needed. See the feed mock (Artifact). Open for the usability test: does the consent step feel redundant?
+
+
 - **Purpose:** a resident puts an anonymous note on the record; anyone can read the record.
 - **Audience:** Resident (no account); Visitor.
 - **Structure:** skip link → container `sm` → `h1` "Community record" → one-line intro (community-owned) → a **"Practice space / made-up data"** note box → **contribution form** (multiline "What's happening in your housing?"; optional topic select; **consent checkbox**; primary button "Send anonymously"; `aria-live` status) → **the record** (`h2` "The community record"; list of outlined cards: note body, optional topic chip, timestamp, "synthetic" chip).
