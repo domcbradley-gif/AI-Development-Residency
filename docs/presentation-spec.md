@@ -40,7 +40,7 @@ screen by screen.
 ### App shell & global patterns
 
 - **Top navigation (every screen):** app/product name on the left, then links —
-  Community record · The gap · Community body · Warrants · Provider · Funding — then
+  Community record · The gap · Community body · Warrants (→ “Standing”, pending rename) · Provider · Funding — then
   the signed-in user's email + **Log out**, or **Log in**. Wraps to multiple rows on
   narrow screens. The product name is `PROVISIONAL (brand)` — currently
   "Community-Governed Data"; the slot will carry the final name (provisionally
@@ -118,6 +118,9 @@ screen by screen.
 - **Provisional notes:** the member-threshold number is community-set (provisional config). `PROVISIONAL (brand)`: shell name only.
 
 ## 5. Warrants — `/warrants`
+
+> **Pending rename (leaning — confirm in the usability test).** “Warrant” reads as cop-like, which conflicts with the won’t-do guardrail (nothing that reads as policing). Planned replacement: **“no confidence”** — the community body *declares no confidence* in a provider and *restores confidence* when things improve. The nav tab + page title become **“Standing”** (keep `/warrants` working as a redirect to `/standing`). Alternative still under test: *“withdraw support” / “restore support.”* Nothing is locked until the usability test’s term-comprehension check. On-screen swaps: the standing banner, **Issue → Declare no confidence**, **Revoke → Restore confidence**, **“Public warrant register” → “Public record,”** and the register card labels. See the before/after stimulus (Artifact) and `docs/design-tokens.md`.
+
 
 - **Purpose:** a body member issues or revokes a warrant; anyone can read the public register.
 - **Audience:** Body member (to act); Visitor (to read); others prompted.
