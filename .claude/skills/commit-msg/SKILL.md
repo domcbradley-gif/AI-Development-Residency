@@ -1,6 +1,6 @@
 ---
 name: commit-msg
-
+description: Writes a clear git commit message from the staged changes. Use when the user asks for a commit message.
 ---
 
 1. Run `git diff --staged` to see what changed.
