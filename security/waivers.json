@@ -1,0 +1,41 @@
+{
+  "_comment": "Reasoned, time-boxed waivers for security surfaces not yet covered by a @security scenario. Each is an explicit, reviewable decision (OWASP threat-model step 3: 'mitigate later' with a reason). Remove a surface's waiver when its @security scenario lands.",
+  "waivers": [
+    {
+      "surface": "dependency-security",
+      "reason": "C2 Next.js upgrade pending",
+      "owner": "Dominic Bradley",
+      "expires": "2026-12-15"
+    },
+    {
+      "surface": "authentication",
+      "reason": "C3 generic auth error messages pending",
+      "owner": "Dominic Bradley",
+      "expires": "2026-12-15"
+    },
+    {
+      "surface": "authorization-access-control",
+      "reason": "C6/V1-V4 RLS verification + hardening pending (needs Supabase policy audit)",
+      "owner": "Dominic Bradley",
+      "expires": "2026-12-15"
+    },
+    {
+      "surface": "input-validation",
+      "reason": "C4/C9 DB-side constraints + column grants pending",
+      "owner": "Dominic Bradley",
+      "expires": "2026-12-15"
+    },
+    {
+      "surface": "anti-automation",
+      "reason": "C5 rate limiting pending",
+      "owner": "Dominic Bradley",
+      "expires": "2026-12-15"
+    },
+    {
+      "surface": "deanonymization-resistance",
+      "reason": "AC-1: timestamp coarsening + roster confidentiality land in the RLS/DB migration",
+      "owner": "Dominic Bradley",
+      "expires": "2026-12-15"
+    }
+  ]
+}

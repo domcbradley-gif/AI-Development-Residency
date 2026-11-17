@@ -38,3 +38,14 @@ jobs:
           node-version: "20"
       - name: Gate-check Week 1 Claude Skills
         run: node scripts/check-skills.mjs
+
+  security:
+    name: Security coverage gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Gate-check OWASP @security scenario coverage
+        run: node scripts/check-security-coverage.mjs

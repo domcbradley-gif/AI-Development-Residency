@@ -1,10 +1,11 @@
 "use client";
 
-// Data access for the anonymous resident capture slice. The browser talks
-// directly to Supabase (Postgres + Row Level Security) via @supabase/ssr — RLS
-// allows anonymous SELECT and INSERT only; UPDATE/DELETE are denied server-side.
+// Data access for the anonymous resident capture slice. Contributions go through
+// the SESSION-LESS anon client (getAnonContributionsClient), so a post is never
+// linked to an account — anonymity holds whether or not the resident is logged in.
+// RLS allows anonymous SELECT and INSERT only; UPDATE/DELETE are denied server-side.
 
-import { getSupabaseBrowserClient } from "./supabaseClient.js";
+import { getAnonContributionsClient } from "./supabaseClient.js";
 import { PROJECTION, buildInsertRow } from "./contributions.js";
 
 // User-facing error messages never echo server internals (per input-validation).
@@ -12,7 +13,7 @@ const LOAD_ERROR = "We couldn't load the record just now. Please try again.";
 const SAVE_ERROR = "We couldn't save your note just now. Please try again.";
 
 export async function listContributions() {
-  const supabase = getSupabaseBrowserClient();
+  const supabase = getAnonContributionsClient();
   const { data, error } = await supabase
     .from("contributions")
     .select(PROJECTION)
@@ -27,7 +28,7 @@ export async function createContribution(input) {
   // authoritative server-side guards. buildInsertRow throws its own clean,
   // specific message for invalid input; let that surface to the user.
   const row = buildInsertRow(input);
-  const supabase = getSupabaseBrowserClient();
+  const supabase = getAnonContributionsClient();
 
   const { data, error } = await supabase
     .from("contributions")
