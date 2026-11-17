@@ -54,14 +54,21 @@ see [`TEST-CASES.md`](./TEST-CASES.md).
 
 ---
 
+
 ## What I Did
 
-_(Write this yourself — in your own words. What did you build this week and how?
-A few sentences.)_
+I asked Claude to create three different mockups based on the three different visual options that came out of the brand strategy workshop just so I could get a feel for what they looked like.
+
+I reviewed and tightened BDD scenarios.
+
+I set up a CI/CD pipeline in my GitHub repository to prevent mistakes from going live. Four checks run: a check that tidies the code, a check that guards the three promises that matter most--anonymity, funding rules, and no scoring of nonprofits upheld, a check that confirms the app still builds, and a check that makes sure the project's saved AI skills are all real and complete. 
+
+I broke a piece of a skill on purpose. The checklist caught it--it turned red and blocked the change. I undid it and it went green again.
+
+I did two tasks on the live app by hand--posting an anonymous note and checking that the funding page flags a funder who has given an amount over the cap. Both worked as expected.
+
 
 ## What I Learned
 
-_(Write this yourself — in your own words. What was new, tricky, or surprising?
-e.g. the every-push trigger, the skills gate, the break-it test, the branch/merge
-workflow, the manual test cases.)_
+I learned that it is very easy to forget the loop that the add, commit, push loop to do things in GitHub. I also learned that it is easy to forget whether or not you are on the main branch in your repository or another branch. It's all very tricky. I find myself asking Claude to confirm I am moving in the right direction before I do things. I am wondering when some of this will start becoming second nature.
 
