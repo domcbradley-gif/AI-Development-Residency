@@ -6,12 +6,12 @@ import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import Typography from "@mui/material/Typography";
 import { getSupabaseBrowserClient } from "@/lib/supabaseClient.js";
+import { GENERIC_SIGNIN, SIGNUP_NOTICE, specificSafeMessage } from "@/lib/auth-errors.js";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -21,7 +21,6 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
-  const [role, setRole] = useState("community_member");
   const [status, setStatus] = useState({ kind: "idle", message: "" });
 
   async function ensureProfile(supabase, userId, roleForNew) {
@@ -46,18 +45,23 @@ export default function LoginPage() {
     try {
       if (mode === "signup") {
         const { data, error } = await supabase.auth.signUp({ email, password });
-        if (error) throw error;
+        if (error) {
+          // Only reveal safe, non-enumerating reasons (rate limit, weak
+          // password). Anything else (including "already registered") shows the
+          // same neutral notice as a brand-new signup, so account existence
+          // cannot be probed.
+          const specific = specificSafeMessage(error);
+          if (specific) setStatus({ kind: "error", message: specific });
+          else setStatus({ kind: "success", message: SIGNUP_NOTICE });
+          return;
+        }
         if (data.session && data.user) {
-          await ensureProfile(supabase, data.user.id, role);
+          await ensureProfile(supabase, data.user.id, "community_member");
           router.push("/");
           router.refresh();
           return;
         }
-        setStatus({
-          kind: "success",
-          message:
-            "Account created. Check your email to confirm, then come back and log in.",
-        });
+        setStatus({ kind: "success", message: SIGNUP_NOTICE });
         return;
       }
 
@@ -70,9 +74,11 @@ export default function LoginPage() {
       router.push("/");
       router.refresh();
     } catch (err) {
+      // One message for every sign-in failure (wrong email, wrong password,
+      // unconfirmed account) so emails with accounts cannot be enumerated.
       setStatus({
         kind: "error",
-        message: err?.message || "Something went wrong. Please try again.",
+        message: specificSafeMessage(err) || GENERIC_SIGNIN,
       });
     }
   }
@@ -131,17 +137,6 @@ export default function LoginPage() {
               fullWidth
               sx={{ mb: 2 }}
             />
-            <TextField
-              label="I am a…"
-              select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              fullWidth
-              sx={{ mb: 2 }}
-            >
-              <MenuItem value="community_member">Community member</MenuItem>
-              <MenuItem value="provider">Provider</MenuItem>
-            </TextField>
           </>
         )}
 

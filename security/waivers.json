@@ -1,0 +1,17 @@
+{
+  "_comment": "Reasoned, time-boxed waivers for security surfaces not yet covered by a @security scenario. Each is an explicit, reviewable decision (OWASP threat-model step 3: 'mitigate later' with a reason). Remove a surface's waiver when its @security scenario lands.",
+  "waivers": [
+    {
+      "surface": "dependency-security",
+      "reason": "C2 Next.js upgrade pending",
+      "owner": "Dominic Bradley",
+      "expires": "2026-12-15"
+    },
+    {
+      "surface": "anti-automation",
+      "reason": "C5 rate limiting pending",
+      "owner": "Dominic Bradley",
+      "expires": "2026-12-15"
+    }
+  ]
+}

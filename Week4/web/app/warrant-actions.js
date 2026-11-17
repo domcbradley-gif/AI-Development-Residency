@@ -32,11 +32,10 @@ export async function issueWarrant(formData) {
     .maybeSingle();
   if (!mine) return; // not a member
 
-  const { count } = await supabase
-    .from("memberships")
-    .select("id", { count: "exact", head: true })
-    .eq("body_id", body.id);
-  if ((count ?? 0) < body.quorum) return; // quorum not met
+  const { data: memberCount } = await supabase.rpc("body_member_count", {
+    p_body_id: body.id,
+  });
+  if ((memberCount ?? 0) < body.quorum) return; // quorum not met
 
   const { data: active } = await supabase
     .from("warrants")

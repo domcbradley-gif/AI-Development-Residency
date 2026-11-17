@@ -1,0 +1,151 @@
+{
+  "_comment": "Surface -> required @security scenario map. Right-sized adaptation of the techfleetworks owasp-secure-coding-bdd gate. A surface is 'triggered' when any detect file exists; a triggered surface must have a @security scenario carrying its requiredTag in the feature index, or an active waiver, or the gate fails closed.",
+  "featureIndex": "Week4/web/features",
+  "surfaces": [
+    {
+      "id": "http-security-headers",
+      "title": "HTTP response security headers (clickjacking, CSP, HSTS, MIME sniffing)",
+      "requiredTag": "@headers",
+      "detect": [
+        "Week4/web/next.config.mjs",
+        "Week4/web/next.config.js"
+      ],
+      "cheatsheets": [
+        "Clickjacking_Defense",
+        "Content_Security_Policy",
+        "HTTP_Headers",
+        "HTTP_Strict_Transport_Security"
+      ],
+      "findings": [
+        "C1"
+      ]
+    },
+    {
+      "id": "dependency-security",
+      "title": "Vulnerable / outdated dependencies",
+      "requiredTag": "@dependencies",
+      "detect": [
+        "Week4/web/package.json"
+      ],
+      "cheatsheets": [
+        "Vulnerable_Dependency_Management",
+        "NPM_Security",
+        "Nextjs_Security"
+      ],
+      "findings": [
+        "C2"
+      ]
+    },
+    {
+      "id": "authentication",
+      "title": "Authentication & login error handling (account enumeration, credential stuffing)",
+      "requiredTag": "@auth",
+      "detect": [
+        "Week4/web/app/login/page.jsx",
+        "Week4/web/app/auth-actions.js"
+      ],
+      "cheatsheets": [
+        "Authentication",
+        "Credential_Stuffing_Prevention",
+        "Error_Handling"
+      ],
+      "findings": [
+        "C3"
+      ]
+    },
+    {
+      "id": "authorization-access-control",
+      "title": "Authorization / access control (RLS, IDOR, self-selected role, warrant tampering)",
+      "requiredTag": "@authz",
+      "detect": [
+        "Week4/web/app/warrant-actions.js",
+        "Week4/web/app/provider-actions.js",
+        "Week4/web/app/body-actions.js"
+      ],
+      "cheatsheets": [
+        "Authorization",
+        "Insecure_Direct_Object_Reference_Prevention",
+        "Business_Logic_Security",
+        "Transaction_Authorization",
+        "Multi_Tenant_Security",
+        "Database_Security"
+      ],
+      "findings": [
+        "C6",
+        "V1",
+        "V2",
+        "V3",
+        "V4"
+      ]
+    },
+    {
+      "id": "input-validation",
+      "title": "Input validation & mass assignment at the data boundary",
+      "requiredTag": "@input",
+      "detect": [
+        "Week4/web/lib/contributions.js",
+        "Week4/web/lib/api.js"
+      ],
+      "cheatsheets": [
+        "Input_Validation",
+        "Mass_Assignment",
+        "Query_Parameterization"
+      ],
+      "findings": [
+        "C4",
+        "C9"
+      ]
+    },
+    {
+      "id": "anti-automation",
+      "title": "Rate limiting / anti-automation (spam, DoS, Sybil quorum)",
+      "requiredTag": "@ratelimit",
+      "detect": [
+        "Week4/web/lib/api.js",
+        "Week4/web/app/warrant-actions.js"
+      ],
+      "cheatsheets": [
+        "Bot_Management_and_Anti-Automation",
+        "Denial_of_Service"
+      ],
+      "findings": [
+        "C5"
+      ]
+    },
+    {
+      "id": "posting-anonymity",
+      "title": "Anonymity holds for logged-in residents (session-less contributions client)",
+      "requiredTag": "@privacy-posting",
+      "detect": [
+        "Week4/web/lib/api.js",
+        "Week4/web/lib/supabaseClient.js"
+      ],
+      "cheatsheets": [
+        "User_Privacy_Protection",
+        "Abuse_Case"
+      ],
+      "findings": [
+        "AC-1 (anonymous posting)"
+      ]
+    },
+    {
+      "id": "deanonymization-resistance",
+      "title": "De-anonymization resistance (coarsened timestamps, member-roster confidentiality)",
+      "requiredTag": "@privacy-deanon",
+      "detect": [
+        "Week4/web/lib/anonymity.js",
+        "Week3/supabase/schema.sql"
+      ],
+      "cheatsheets": [
+        "User_Privacy_Protection",
+        "Abuse_Case",
+        "Authorization"
+      ],
+      "findings": [
+        "AC-1",
+        "C8",
+        "V4b"
+      ]
+    }
+  ]
+}
