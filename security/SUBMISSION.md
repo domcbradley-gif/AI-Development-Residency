@@ -39,8 +39,12 @@
 
 ## What I Did
 
-_(Write this yourself — no less than 2 paragraphs, with full technical detail. No AI — the instructor checks.)_
+I did a PenTest and a research report on an area of security. I focused on the weakest area: the authorization layer, which cuts across the data, service, and presentation tiers. I acted like a white-hat hacker and reviewed all tiers for weaknesses. The single biggest threat could be a housing provider the community wants to hold accountable trying to determine which residents spoke up so they could retaliate--an "abuse case." I made it so every security fix ships with an automatic test that proves the protection is working, plus a gate in the pipeline that blocks any security-relevant change that doesn't have one. Anything not yet fixed is logged as an explicit, dated waiver. The app now tells browsers to block clickjacking, stop guessing file types, and force a secure connection. A logged-in resident can read and post, but the post carries no trace of their account. The login page no longer reveals whether an email has an account, so it can't be used to find out who is a member. People can't self-promote to a provider role, the member roster is hidden, fake-dated spam is blocked, and timestamps are blurred to the day so residents can't be de-anonymized. The app is pinned to a supported Next.js version, and the pipeline blocks any critical dependency advisory. I am having a per-user edge throttling plus a bot check as a dated, deferred item and mitigations already in place are recorded.
+
+The research report goes into the stakes, vulnerability, and fixes in more detail. Everything has been checked against the Open Worldwide Application Security Project, or OWASP, standards.
 
 ## What I Learned
 
-_(Write this yourself — no less than 2 paragraphs: what you learned, what you'd do differently next time, and how it helps in future team work. No AI — the instructor checks.)_
+One thing I learned was when to stop. I'm the kind of person who tries to push through and get things done all at once.Working with Claude is teaching me that it is ok to park certain things that are not critical and deal with them another day. For example, Claude stopped me from forcing a Next update that would have broken my UI library.
+
+Something else I learned was how to reorient myself when I became confused and overwhelmed with tasks and decision-making.Claude taught me how to use $LASTEXITCODE to see if VS Code was printing a success message. I was also able to ask for more detailed steps to do manual security tests. If I was unclear about whether or not a commit happened, I could use git log --oneline -5 to print the five most recent commits.
