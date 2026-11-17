@@ -66,7 +66,7 @@ export default function ContributionForm({ topics, provisionalLabel, onSubmitted
         Share your experience
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        Your note is anonymous. We don&rsquo;t ask for your name, and no one can trace it back to you. This is a practice space, so all data is made-up.
+        Your note is anonymous. We don&rsquo;t ask for your name, and no one can trace it back to you. This is a practice space, so all data is made-up. Once sent, a note can&rsquo;t be edited or removed.
       </Typography>
 
       <Box component="form" onSubmit={handleSubmit} noValidate>

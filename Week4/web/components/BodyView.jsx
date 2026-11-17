@@ -19,12 +19,12 @@ export default function BodyView({
   return (
     <Container component="main" id="main" maxWidth="sm" sx={{ py: 4 }}>
       <Typography component="h1" variant="h4" gutterBottom>
-        Community body
+        Residents&rsquo; Group
       </Typography>
 
       {!body ? (
         <Typography color="text.secondary">
-          No community body exists yet.
+          No residents&rsquo; group exists yet.
         </Typography>
       ) : (
         <Paper variant="outlined" sx={{ p: 3 }}>
@@ -37,7 +37,7 @@ export default function BodyView({
             </Typography>
           )}
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            To act, the body needs {body.quorum} members ({provisionalLabel}). People join themselves — no organization picks who is on the body.
+            To act, the group needs {body.quorum} members ({provisionalLabel}). Anyone can join — no landlord, funder, or nonprofit decides who is a member.
           </Typography>
 
           {user ? (
@@ -45,7 +45,7 @@ export default function BodyView({
               <Typography sx={{ mb: 2 }}>
                 <strong>{memberCount}</strong> member{memberCount === 1 ? "" : "s"}.{" "}
                 {memberCount >= body.quorum
-                  ? "Enough members have joined — the body can issue a warrant."
+                  ? "Enough members have joined — the group can withdraw support."
                   : `Not enough members yet (needs ${body.quorum}).`}
               </Typography>
 
@@ -54,7 +54,7 @@ export default function BodyView({
                   sx={{ display: "flex", alignItems: "center", gap: 2, flexWrap: "wrap" }}
                 >
                   <Alert severity="success" sx={{ flexGrow: 1 }}>
-                    You are a member of this body.
+                    You are a member of this group.
                   </Alert>
                   <form action={leaveBody}>
                     <input type="hidden" name="bodyId" value={body.id} />
@@ -67,7 +67,7 @@ export default function BodyView({
                 <form action={joinBody}>
                   <input type="hidden" name="bodyId" value={body.id} />
                   <Button type="submit" variant="contained">
-                    Join this body
+                    Join this group
                   </Button>
                 </form>
               )}
@@ -77,7 +77,7 @@ export default function BodyView({
               <Link component={NextLink} href="/login">
                 Log in
               </Link>{" "}
-              to join this community body.
+              to join this residents&rsquo; group.
             </Alert>
           )}
         </Paper>

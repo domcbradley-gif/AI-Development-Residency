@@ -19,12 +19,15 @@ export default function GapView({ provider, rows, provisionalLabel }) {
   return (
     <Container component="main" id="main" maxWidth="md" sx={{ py: 4 }}>
       <Typography component="h1" variant="h4" gutterBottom>
-        The gap
+        Compare
+      </Typography>
+      <Typography color="text.secondary" sx={{ mb: 2 }}>
+        Residents&rsquo; accounts vs. the official record.
       </Typography>
 
       {!provider ? (
         <Typography color="text.secondary">
-          No provider is set up yet. Add one to see the gap.
+          No provider is set up yet. Add one to see the comparison.
         </Typography>
       ) : (
         <>
@@ -33,7 +36,8 @@ export default function GapView({ provider, rows, provisionalLabel }) {
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
             This is not a score or a grade. It shows both sides and marks
-            where the official record and residents&rsquo; accounts don&rsquo;t agree. All data is made-up.
+            where the official record and residents&rsquo; accounts don&rsquo;t agree.
+            Any numbers are self-reported context, not a grade. All data is made-up.
           </Typography>
 
           <Stack spacing={2}>
