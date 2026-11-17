@@ -21,6 +21,8 @@ jobs:
           cache-dependency-path: Week4/web/package-lock.json
       - name: Install (clean, from lockfile)
         run: npm ci
+      - name: Audit production dependencies (fail on CRITICAL; highs are tracked exceptions)
+        run: npm audit --omit=dev --audit-level=critical
       - name: Lint
         run: npm run lint
       - name: Test (unit tests from MVP requirements — anonymity, funding, the gap)
