@@ -8,26 +8,8 @@
       "expires": "2026-12-15"
     },
     {
-      "surface": "authorization-access-control",
-      "reason": "C6/V1-V4 RLS verification + hardening pending (needs Supabase policy audit)",
-      "owner": "Dominic Bradley",
-      "expires": "2026-12-15"
-    },
-    {
-      "surface": "input-validation",
-      "reason": "C4/C9 DB-side constraints + column grants pending",
-      "owner": "Dominic Bradley",
-      "expires": "2026-12-15"
-    },
-    {
       "surface": "anti-automation",
       "reason": "C5 rate limiting pending",
-      "owner": "Dominic Bradley",
-      "expires": "2026-12-15"
-    },
-    {
-      "surface": "deanonymization-resistance",
-      "reason": "AC-1: timestamp coarsening + roster confidentiality land in the RLS/DB migration",
       "owner": "Dominic Bradley",
       "expires": "2026-12-15"
     }

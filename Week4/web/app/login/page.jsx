@@ -6,7 +6,6 @@ import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
@@ -22,7 +21,6 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
-  const [role, setRole] = useState("community_member");
   const [status, setStatus] = useState({ kind: "idle", message: "" });
 
   async function ensureProfile(supabase, userId, roleForNew) {
@@ -58,7 +56,7 @@ export default function LoginPage() {
           return;
         }
         if (data.session && data.user) {
-          await ensureProfile(supabase, data.user.id, role);
+          await ensureProfile(supabase, data.user.id, "community_member");
           router.push("/");
           router.refresh();
           return;
@@ -139,17 +137,6 @@ export default function LoginPage() {
               fullWidth
               sx={{ mb: 2 }}
             />
-            <TextField
-              label="I am a…"
-              select
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              fullWidth
-              sx={{ mb: 2 }}
-            >
-              <MenuItem value="community_member">Community member</MenuItem>
-              <MenuItem value="provider">Provider</MenuItem>
-            </TextField>
           </>
         )}
 
