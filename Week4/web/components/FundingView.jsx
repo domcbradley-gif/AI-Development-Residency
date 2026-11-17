@@ -13,16 +13,18 @@ export default function FundingView({ summary, conflicts, provisionalLabel }) {
   return (
     <Container component="main" id="main" maxWidth="md" sx={{ py: 4 }}>
       <Typography component="h1" variant="h4" gutterBottom>
-        Funding discipline
+        How this is funded
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        The guardrails in the open: no money from the people being watched, and no
-        single funder over {pct(summary.capFraction)} of the budget ({provisionalLabel}).
+        Two rules keep this project independent: it takes no money from the housing
+        providers it holds accountable, and no single funder gives more than{" "}
+        {pct(summary.capFraction)} of the budget ({provisionalLabel}).
       </Typography>
 
       {summary.anyFromWatched && (
         <Alert severity="error" sx={{ mb: 2 }}>
-          A funder is marked as &ldquo;from the watched&rdquo; — this breaks the independence rule.
+          A funder is one of the housing providers being held accountable — this
+          breaks the independence rule.
         </Alert>
       )}
       {summary.anyOverCap && (
@@ -32,7 +34,8 @@ export default function FundingView({ summary, conflicts, provisionalLabel }) {
       )}
       {!summary.anyFromWatched && !summary.anyOverCap && summary.total > 0 && (
         <Alert severity="success" sx={{ mb: 2 }}>
-          Within the rules: no money from the watched, and no funder over the cap.
+          Within the rules: no money from the providers being held accountable, and
+          no funder over the cap.
         </Alert>
       )}
 
@@ -49,7 +52,7 @@ export default function FundingView({ summary, conflicts, provisionalLabel }) {
               </Typography>
               {r.overCap && <Chip label="over cap" color="error" size="small" />}
               {r.fromWatched && (
-                <Chip label="from the watched" color="error" size="small" />
+                <Chip label="from a provider" color="error" size="small" />
               )}
             </Box>
           </Paper>

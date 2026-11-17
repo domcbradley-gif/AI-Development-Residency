@@ -21,6 +21,11 @@ function fmt(ts) {
   }
 }
 
+// DB stores status as "issued" / "revoked"; show plain words to people.
+function statusLabel(status) {
+  return status === "issued" ? "Active" : "Lifted";
+}
+
 export default function WarrantsView({
   provider,
   warrants,
@@ -35,23 +40,35 @@ export default function WarrantsView({
   return (
     <Container component="main" id="main" maxWidth="md" sx={{ py: 4 }}>
       <Typography component="h1" variant="h4" gutterBottom>
-        Warrants
+        Accountability
+      </Typography>
+      <Typography color="text.secondary" sx={{ mb: 3 }}>
+        When enough members agree, the residents&rsquo; group can withdraw its
+        support from a provider &mdash; a public, reversible way of saying it does
+        not stand behind them. Support can be restored at any time.
       </Typography>
 
       {!provider ? (
         <Typography color="text.secondary">No provider set up yet.</Typography>
       ) : (
         <>
-          {/* Provider standing — changes with the warrant. */}
+          {/* Provider standing — tracks whether support has been withdrawn. */}
           <Alert
             severity={activeWarrant ? "error" : "success"}
             variant="outlined"
             sx={{ mb: 3 }}
           >
-            <strong>{provider.name}</strong> —{" "}
-            {activeWarrant
-              ? `under an active community warrant since ${fmt(activeWarrant.issued_at)}.`
-              : "no active community warrant."}
+            {activeWarrant ? (
+              <>
+                The community has withdrawn its support from{" "}
+                <strong>{provider.name}</strong> (since {fmt(activeWarrant.issued_at)}).
+              </>
+            ) : (
+              <>
+                The community has not withdrawn support from{" "}
+                <strong>{provider.name}</strong>.
+              </>
+            )}
           </Alert>
 
           {/* Member actions */}
@@ -59,25 +76,25 @@ export default function WarrantsView({
             activeWarrant ? (
               <Paper variant="outlined" sx={{ p: 2, mb: 3 }}>
                 <Typography variant="subtitle1" gutterBottom>
-                  Revoke the warrant
+                  Restore support
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                  Revocation is one step and takes effect immediately.
+                  Restoring support is one step and takes effect immediately.
                 </Typography>
                 <form action={revokeWarrant}>
                   <input type="hidden" name="warrantId" value={activeWarrant.id} />
                   <Button type="submit" variant="contained" color="error">
-                    Revoke warrant
+                    Restore support
                   </Button>
                 </form>
               </Paper>
             ) : quorumMet ? (
               <Paper variant="outlined" sx={{ p: 2, mb: 3 }}>
                 <Typography variant="subtitle1" gutterBottom>
-                  Issue a warrant
+                  Withdraw support
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                  An explicit community action. Quorum is met ({memberCount}/{quorum}).
+                  An explicit community action. Enough members have joined ({memberCount}/{quorum}).
                 </Typography>
                 <Box component="form" action={issueWarrant}>
                   <TextField
@@ -89,21 +106,22 @@ export default function WarrantsView({
                     sx={{ mb: 2 }}
                   />
                   <Button type="submit" variant="contained">
-                    Issue warrant
+                    Withdraw support
                   </Button>
                 </Box>
               </Paper>
             ) : (
               <Alert severity="info" sx={{ mb: 3 }}>
-                Quorum is not yet met ({memberCount}/{quorum} members). The body
-                can issue a warrant once enough members have joined.
+                Not enough members yet ({memberCount}/{quorum}). The group can
+                withdraw support once enough members have joined.
               </Alert>
             )
           ) : (
             <Alert severity="info" sx={{ mb: 3 }}>
-              Only members of the community body can issue or revoke a warrant.{" "}
+              Only members of the residents&rsquo; group can withdraw or restore
+              support.{" "}
               <Link component={NextLink} href={user ? "/body" : "/login"}>
-                {user ? "Join the body" : "Log in"}
+                {user ? "Join the group" : "Log in"}
               </Link>
               .
             </Alert>
@@ -111,13 +129,13 @@ export default function WarrantsView({
 
           <Divider sx={{ my: 2 }} />
 
-          {/* Public register */}
+          {/* Public record */}
           <Typography component="h2" variant="h5" gutterBottom>
-            Public warrant register
+            Public record
           </Typography>
           {warrants.length === 0 ? (
             <Typography color="text.secondary">
-              No warrants have been issued yet.
+              Nothing has been recorded yet.
             </Typography>
           ) : (
             <Stack spacing={2}>
@@ -125,13 +143,13 @@ export default function WarrantsView({
                 <Paper key={w.id} variant="outlined" sx={{ p: 2 }}>
                   <Box sx={{ display: "flex", gap: 1, alignItems: "center", mb: 1 }}>
                     <Chip
-                      label={w.status}
+                      label={statusLabel(w.status)}
                       color={w.status === "issued" ? "error" : "default"}
                       size="small"
                     />
                     <Typography variant="body2" color="text.secondary">
-                      Issued {fmt(w.issued_at)}
-                      {w.revoked_at ? ` · revoked ${fmt(w.revoked_at)}` : ""}
+                      Support withdrawn {fmt(w.issued_at)}
+                      {w.revoked_at ? ` · restored ${fmt(w.revoked_at)}` : ""}
                     </Typography>
                   </Box>
                   {w.reason && (

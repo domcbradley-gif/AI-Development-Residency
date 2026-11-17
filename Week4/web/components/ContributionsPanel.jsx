@@ -52,11 +52,14 @@ export default function ContributionsPanel() {
 
       <Container component="main" id="main" maxWidth="sm" sx={{ py: 4 }}>
         <Typography component="h1" variant="h4" gutterBottom>
-          Community record
+          Community Record
         </Typography>
         <Typography color="text.secondary" sx={{ mb: 1 }}>
           A space for residents to put what their housing is really like on the record —
-          owned by the community, not the funder.
+          owned by the community, not the landlord or funder.
+        </Typography>
+        <Typography variant="body2" sx={{ mb: 1 }}>
+          New here? <Link href="/about">Read About</Link> to see what this is and how it works.
         </Typography>
         <Box
           role="note"

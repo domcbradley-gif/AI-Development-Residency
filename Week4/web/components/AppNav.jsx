@@ -8,6 +8,9 @@ import Box from "@mui/material/Box";
 import Link from "next/link";
 import { signOut } from "@/app/auth-actions.js";
 
+// Nav links are underlined so they read as links, not plain buttons.
+const navLinkSx = { textDecoration: "underline", textUnderlineOffset: "3px" };
+
 // `user` is passed from the server layout: { email } when signed in, else null.
 export default function AppNav({ user }) {
   return (
@@ -21,22 +24,25 @@ export default function AppNav({ user }) {
           Community-Governed Data
         </Typography>
 
-        <Button component={Link} href="/" color="inherit">
-          Community record
+        <Button component={Link} href="/" color="inherit" sx={navLinkSx}>
+          Community Record
         </Button>
-        <Button component={Link} href="/gap" color="inherit">
-          The gap
+        <Button component={Link} href="/gap" color="inherit" sx={navLinkSx}>
+          Compare
         </Button>
-        <Button component={Link} href="/body" color="inherit">
-          Community body
+        <Button component={Link} href="/body" color="inherit" sx={navLinkSx}>
+          Residents&rsquo; Group
         </Button>
-        <Button component={Link} href="/warrants" color="inherit">
-          Warrants
+        <Button component={Link} href="/warrants" color="inherit" sx={navLinkSx}>
+          Accountability
         </Button>
-        <Button component={Link} href="/provider" color="inherit">
+        <Button component={Link} href="/about" color="inherit" sx={navLinkSx}>
+          About
+        </Button>
+        <Button component={Link} href="/provider" color="inherit" sx={navLinkSx}>
           Provider
         </Button>
-        <Button component={Link} href="/funding" color="inherit">
+        <Button component={Link} href="/funding" color="inherit" sx={navLinkSx}>
           Funding
         </Button>
 
