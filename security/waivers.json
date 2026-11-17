@@ -8,12 +8,6 @@
       "expires": "2026-12-15"
     },
     {
-      "surface": "authentication",
-      "reason": "C3 generic auth error messages pending",
-      "owner": "Dominic Bradley",
-      "expires": "2026-12-15"
-    },
-    {
       "surface": "authorization-access-control",
       "reason": "C6/V1-V4 RLS verification + hardening pending (needs Supabase policy audit)",
       "owner": "Dominic Bradley",
