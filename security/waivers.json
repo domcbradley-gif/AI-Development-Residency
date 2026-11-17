@@ -3,9 +3,10 @@
   "waivers": [
     {
       "surface": "anti-automation",
-      "reason": "C5 rate limiting pending",
+      "reason": "Effective anti-automation on the anonymous write path requires a server-side proxy with per-IP rate limiting + Turnstile; a DB hard cap would be weaponizable to censor residents, so it is rejected. Partial mission-safe mitigations in place (append-only, synthetic-flag, coarsened timestamps). See security/anti-automation.md.",
       "owner": "Dominic Bradley",
-      "expires": "2026-12-15"
+      "expires": "2026-12-15",
+      "doc": "security/anti-automation.md"
     }
   ]
 }
