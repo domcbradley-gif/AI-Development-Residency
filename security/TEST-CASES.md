@@ -28,9 +28,11 @@ Tied to `Week4/web/features/security-headers.feature` (`@headers`).
 - No `X-Powered-By` header is sent.
 
 **Actual result**
-- _(run and record)_
+- Run 2026-11-17: all five headers present (X-Frame-Options: DENY, X-Content-Type-Options:
+  nosniff, Referrer-Policy, a CSP with frame-ancestors 'none', and HSTS) and no
+  X-Powered-By header.
 
-**Status: ___**
+**Status: PASS**
 
 ---
 
@@ -76,9 +78,11 @@ Tied to `Week4/web/features/auth-error-handling.feature` (`@auth`).
 - Nothing distinguishes "no such account" from "wrong password."
 
 **Actual result**
-- _(run and record)_
+- Run 2026-11-17. Test A (real email, wrong password): "Email or password is incorrect."
+  Test B (non-existent email): "Email or password is incorrect." The two messages are
+  identical, so login does not reveal whether an account exists.
 
-**Status: ___**
+**Status: PASS**
 
 ---
 
@@ -193,6 +197,8 @@ Tied to `Week4/web/features/dependency-security.feature` (`@dependencies`) and
 - The production audit shows no advisory of critical severity.
 
 **Actual result**
-- _(run and record — CI #76 was green at time of writing)_
+- Run 2026-11-17 (CI #76): all jobs green. The Security coverage gate shows 7/8
+  surfaces COVERED with anti-automation waived, and the production audit reports no
+  advisory of critical severity.
 
-**Status: ___**
+**Status: PASS**
