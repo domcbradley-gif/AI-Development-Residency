@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 
 function formatDate(iso) {
   try {
-    return new Date(iso).toLocaleString();
+    return new Date(iso).toLocaleDateString();  // date only — de-anon (AC-1): no exact time on public posts
   } catch {
     return iso;
   }
