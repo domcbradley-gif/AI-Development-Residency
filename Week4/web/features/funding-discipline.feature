@@ -13,6 +13,13 @@ Feature: Funding discipline in the open
     Then each funder's name and amount are visible
     And no single funder exceeds about 25% of the budget
 
+  Scenario: A funder over the cap is flagged
+    Given a single funder provides more than 25% of the budget
+    When I inspect the funding record
+    Then that funder is flagged as over the cap
+    And the page warns that one funder exceeds the 25% limit
+    And the funder's share and the total are shown
+
   Scenario: Money from the watched is disallowed
     Given a funding source is marked as coming from a watched provider
     Then it is treated as disallowed
