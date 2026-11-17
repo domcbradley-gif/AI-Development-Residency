@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 
 function formatDate(iso) {
   try {
-    return new Date(iso).toLocaleDateString();  // date only — de-anon (AC-1): no exact time on public posts
+    return new Date(iso).toLocaleDateString(undefined, { timeZone: "UTC" });  // date only, in UTC — matches the day the DB truncated to (de-anon, AC-1)
   } catch {
     return iso;
   }
