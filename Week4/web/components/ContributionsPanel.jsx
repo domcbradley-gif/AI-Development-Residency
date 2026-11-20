@@ -72,7 +72,7 @@ export default function ContributionsPanel() {
             fontSize: "0.875rem",
           }}
         >
-          <strong>Practice space.</strong> Everything here is made-up (test) data. You can&rsquo;t enter real resident data yet.
+          <strong>Practice space.</strong> Everything here is example (test) data. You can&rsquo;t enter real resident data yet.
         </Box>
 
         <ContributionForm
