@@ -15,7 +15,7 @@ import { issueWarrant, revokeWarrant } from "@/app/warrant-actions.js";
 function fmt(ts) {
   if (!ts) return "";
   try {
-    return new Date(ts).toLocaleString();
+    return new Date(ts).toLocaleDateString(undefined, { timeZone: "UTC" });
   } catch {
     return ts;
   }
@@ -23,7 +23,7 @@ function fmt(ts) {
 
 // DB stores status as "issued" / "revoked"; show plain words to people.
 function statusLabel(status) {
-  return status === "issued" ? "Active" : "Lifted";
+  return status === "issued" ? "Support withdrawn" : "Support restored";
 }
 
 export default function WarrantsView({

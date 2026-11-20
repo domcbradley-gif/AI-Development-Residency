@@ -4,7 +4,7 @@
 // solo developer so the slice runs. A Tier-1 community decision must ratify or
 // replace them. The UI shows the label below next to anything governed by these.
 
-export const PROVISIONAL_LABEL = "provisional — not set by the community";
+export const PROVISIONAL_LABEL = "still being finalized — not set by the community";
 
 // Body length bounds. These mirror the Postgres CHECK constraint
 // (char_length(body) between 1 and 5000), which is the authoritative server-side

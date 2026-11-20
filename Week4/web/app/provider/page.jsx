@@ -81,10 +81,10 @@ export default async function ProviderPage() {
   const quorum = bodies?.[0]?.quorum ?? null;
 
   const independence = [
-    { label: "Membership is self-organized (no organization selects members)", ok: true },
+    { label: "Members join themselves; no landlord, funder, or nonprofit picks them", ok: true },
     { label: "No single funder is over the cap", ok: !funding.anyOverCap },
     { label: "No money from the watched", ok: !funding.anyFromWatched },
-    { label: "A quorum is set for the community body", ok: Boolean(quorum && quorum >= 1) },
+    { label: "A quorum is set for the residents' group", ok: Boolean(quorum && quorum >= 1) },
   ];
 
   return (

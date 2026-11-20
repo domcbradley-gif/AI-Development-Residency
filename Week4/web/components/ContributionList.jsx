@@ -18,7 +18,7 @@ export default function ContributionList({ items, loading, error }) {
   return (
     <Box component="section" aria-labelledby="record-heading" sx={{ mt: 5 }}>
       <Typography component="h2" variant="h5" id="record-heading" gutterBottom>
-        The community record
+        The Community Record
       </Typography>
 
       {loading && (
@@ -62,7 +62,7 @@ export default function ContributionList({ items, loading, error }) {
                   </Typography>
                   {item.synthetic && (
                     <Chip
-                      label="synthetic"
+                      label="example"
                       size="small"
                       color="primary"
                       variant="outlined"
