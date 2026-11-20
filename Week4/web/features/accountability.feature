@@ -19,7 +19,7 @@ Feature: Withdraw and restore community support
   Scenario: A member withdraws the community's support
     Given I am a member of "Maplewood Residents Council"
     When I withdraw support from "Maplewood Supportive Housing"
-    Then the provider's standing appears in the register as "Active"
+    Then the provider's standing appears in the register as "Support withdrawn"
     And a receipt of the withdrawal is recorded
     And the entry names one provider and one group and is dated
 
@@ -32,7 +32,7 @@ Feature: Withdraw and restore community support
     Given support has been withdrawn from "Maplewood Supportive Housing"
     And I am a member of the group that withdrew it
     When I restore support
-    Then the provider's standing becomes "Lifted"
+    Then the provider's standing becomes "Support restored"
     And it records who restored it and when
     And a receipt of the restoration is recorded
 

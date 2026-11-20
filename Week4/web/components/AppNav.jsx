@@ -21,7 +21,7 @@ export default function AppNav({ user }) {
           component="div"
           sx={{ flexGrow: 1, fontSize: "1rem" }}
         >
-          Community-Governed Data
+          Many Strong
         </Typography>
 
         <Button component={Link} href="/" color="inherit" sx={navLinkSx}>

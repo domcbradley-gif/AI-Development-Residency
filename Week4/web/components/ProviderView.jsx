@@ -13,7 +13,7 @@ import ProviderIntakeForm from "@/components/ProviderIntakeForm.jsx";
 function fmt(ts) {
   if (!ts) return "";
   try {
-    return new Date(ts).toLocaleString();
+    return new Date(ts).toLocaleDateString(undefined, { timeZone: "UTC" });
   } catch {
     return ts;
   }
@@ -39,13 +39,13 @@ export default function ProviderView({
       ) : (
         <>
           <Typography color="text.secondary" sx={{ mb: 2 }}>
-            The community-issued credential a provider sees about itself.
+            What the community record shows about this provider.
           </Typography>
           <Alert severity={activeWarrant ? "error" : "success"} variant="outlined" sx={{ mb: 3 }}>
             <strong>{provider.name}</strong> —{" "}
             {activeWarrant
-              ? `currently under a community warrant (since ${fmt(activeWarrant.issued_at)}).`
-              : "in good standing — no active community warrant."}
+              ? `the community has withdrawn its support (since ${fmt(activeWarrant.issued_at)}).`
+              : "the community has not withdrawn its support."}
           </Alert>
 
           {/* STUB (ADR 0007, 4.3): independence re-check, computed from data. */}
@@ -111,13 +111,13 @@ export default function ProviderView({
             History (receipts)
           </Typography>
           {events.length === 0 ? (
-            <Typography color="text.secondary">No warrant activity yet.</Typography>
+            <Typography color="text.secondary">No activity yet.</Typography>
           ) : (
             <Stack spacing={1.5}>
               {events.map((e) => (
                 <Paper key={e.id} variant="outlined" sx={{ p: 2 }}>
                   <Typography variant="body2">
-                    Warrant <strong>{e.event_type}</strong> · {fmt(e.created_at)}
+                    <strong>{e.event_type === "issued" ? "Support withdrawn" : "Support restored"}</strong> · {fmt(e.created_at)}
                     {e.note ? ` · ${e.note}` : ""}
                   </Typography>
                 </Paper>

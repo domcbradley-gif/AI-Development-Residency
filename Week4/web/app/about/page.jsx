@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 
 export const metadata = {
-  title: "About — Community record",
+  title: "About — Many Strong",
   description: "What this is, who runs it, and what happens after you post.",
 };
 
@@ -59,7 +59,7 @@ export default function AboutPage() {
 
       <Divider sx={{ my: 3 }} />
       <Typography variant="caption" color="text.secondary">
-        This is a practice environment. All data shown is made-up while the tool is
+        This is a practice environment. All data shown is example data while the tool is
         being tested.
       </Typography>
     </Container>

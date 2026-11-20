@@ -10,7 +10,7 @@ import { getSupabaseServerClient } from "@/lib/supabaseServer.js";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Community record — share your housing experience",
+  title: "Many Strong — share your housing experience",
   description:
     "A community-owned space for residents to put their housing experience on " +
     "the record. Practice environment — synthetic data only.",
