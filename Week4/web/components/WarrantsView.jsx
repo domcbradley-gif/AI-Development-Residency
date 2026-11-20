@@ -43,9 +43,7 @@ export default function WarrantsView({
         Accountability
       </Typography>
       <Typography color="text.secondary" sx={{ mb: 3 }}>
-        When enough members agree, the residents&rsquo; group can withdraw its
-        support from a provider &mdash; a public, reversible way of saying it does
-        not stand behind them. Support can be restored at any time.
+        When enough members agree, the residents&rsquo; group can withdraw its support from a provider. This is public. It means the group no longer stands behind them. The group can restore support at any time.
       </Typography>
 
       {!provider ? (
@@ -79,7 +77,7 @@ export default function WarrantsView({
                   Restore support
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                  Restoring support is one step and takes effect immediately.
+                  Restoring support takes one step and happens right away.
                 </Typography>
                 <form action={revokeWarrant}>
                   <input type="hidden" name="warrantId" value={activeWarrant.id} />
@@ -94,7 +92,7 @@ export default function WarrantsView({
                   Withdraw support
                 </Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                  An explicit community action. Enough members have joined ({memberCount}/{quorum}).
+                  This is a community action. Enough members have joined ({memberCount}/{quorum}).
                 </Typography>
                 <Box component="form" action={issueWarrant}>
                   <TextField
@@ -113,7 +111,7 @@ export default function WarrantsView({
             ) : (
               <Alert severity="info" sx={{ mb: 3 }}>
                 Not enough members yet ({memberCount}/{quorum}). The group can
-                withdraw support once enough members have joined.
+                withdraw support once enough people join.
               </Alert>
             )
           ) : (
@@ -135,7 +133,7 @@ export default function WarrantsView({
           </Typography>
           {warrants.length === 0 ? (
             <Typography color="text.secondary">
-              Nothing has been recorded yet.
+              Nothing here yet.
             </Typography>
           ) : (
             <Stack spacing={2}>

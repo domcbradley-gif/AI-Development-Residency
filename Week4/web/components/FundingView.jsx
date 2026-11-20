@@ -16,14 +16,14 @@ export default function FundingView({ summary, conflicts, provisionalLabel }) {
         How this is funded
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-        Two rules keep this project independent: it takes no money from the housing
-        providers it holds accountable, and no single funder gives more than{" "}
+        Two rules keep this project independent. First, it takes no money from the housing
+        providers it watches. Second, no single funder gives more than{" "}
         {pct(summary.capFraction)} of the budget ({provisionalLabel}).
       </Typography>
 
       {summary.anyFromWatched && (
         <Alert severity="error" sx={{ mb: 2 }}>
-          A funder is one of the housing providers being held accountable — this
+          One funder is a housing provider this project watches — that
           breaks the independence rule.
         </Alert>
       )}
@@ -34,7 +34,7 @@ export default function FundingView({ summary, conflicts, provisionalLabel }) {
       )}
       {!summary.anyFromWatched && !summary.anyOverCap && summary.total > 0 && (
         <Alert severity="success" sx={{ mb: 2 }}>
-          Within the rules: no money from the providers being held accountable, and
+          All good: no money from the providers we watch, and
           no funder over the cap.
         </Alert>
       )}
@@ -65,10 +65,10 @@ export default function FundingView({ summary, conflicts, provisionalLabel }) {
       <Divider sx={{ mb: 3 }} />
 
       <Typography component="h2" variant="h5" gutterBottom>
-        Conflict register
+        Conflicts of interest
       </Typography>
       {conflicts.length === 0 ? (
-        <Typography color="text.secondary">No conflicts disclosed.</Typography>
+        <Typography color="text.secondary">No conflicts to report.</Typography>
       ) : (
         <Stack spacing={1.5}>
           {conflicts.map((c) => (

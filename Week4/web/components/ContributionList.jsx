@@ -35,7 +35,7 @@ export default function ContributionList({ items, loading, error }) {
 
       {!loading && !error && items.length === 0 && (
         <Typography color="text.secondary">
-          No contributions yet. Be the first to add one above.
+          Nothing here yet. Be the first to add a note above.
         </Typography>
       )}
 

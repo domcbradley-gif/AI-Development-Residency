@@ -39,7 +39,7 @@ export default function ProviderView({
       ) : (
         <>
           <Typography color="text.secondary" sx={{ mb: 2 }}>
-            What the community record shows about this provider.
+            What the record shows about this provider.
           </Typography>
           <Alert severity={activeWarrant ? "error" : "success"} variant="outlined" sx={{ mb: 3 }}>
             <strong>{provider.name}</strong> —{" "}
@@ -97,7 +97,7 @@ export default function ProviderView({
             <ProviderIntakeForm />
           ) : user ? (
             <Alert severity="info" sx={{ mb: 3 }}>
-              Only provider accounts can add to the record. You are signed in as a
+              Only provider accounts can add to the record. You&rsquo;re signed in as a
               community member.
             </Alert>
           ) : (
@@ -108,7 +108,7 @@ export default function ProviderView({
 
           <Divider sx={{ my: 3 }} />
           <Typography component="h2" variant="h5" gutterBottom>
-            History (receipts)
+            History
           </Typography>
           {events.length === 0 ? (
             <Typography color="text.secondary">No activity yet.</Typography>

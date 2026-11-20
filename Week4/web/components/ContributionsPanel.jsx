@@ -55,11 +55,10 @@ export default function ContributionsPanel() {
           Community Record
         </Typography>
         <Typography color="text.secondary" sx={{ mb: 1 }}>
-          A space for residents to put what their housing is really like on the record —
-          owned by the community, not the landlord or funder.
+          A place where residents can say what their housing is really like. It&rsquo;s owned by the community — not the landlord, not the funder.
         </Typography>
         <Typography variant="body2" sx={{ mb: 1 }}>
-          New here? <Link href="/about">Read About</Link> to see what this is and how it works.
+          First time here? <Link href="/about">Read About</Link> to see what this is and how it works.
         </Typography>
         <Box
           role="note"
@@ -72,7 +71,7 @@ export default function ContributionsPanel() {
             fontSize: "0.875rem",
           }}
         >
-          <strong>Practice space.</strong> Everything here is example (test) data. You can&rsquo;t enter real resident data yet.
+          <strong>Practice space.</strong> Everything here is example data — you can&rsquo;t add real resident info yet.
         </Box>
 
         <ContributionForm

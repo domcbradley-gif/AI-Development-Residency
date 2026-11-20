@@ -4,8 +4,8 @@ Feature: Funding discipline in the open
   I want to inspect who funds the project and any conflicts
   So that I can check its independence
 
-  Scenario: The conflict register is public
-    When I open the conflict register
+  Scenario: The conflicts of interest list is public
+    When I open the conflicts of interest list
     Then I can read every disclosed conflict of interest
 
   Scenario: Funder records are public and support a cap check

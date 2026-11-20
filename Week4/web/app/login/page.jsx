@@ -89,7 +89,7 @@ export default function LoginPage() {
         {mode === "login" ? "Log in" : "Sign up"}
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        You only need an account to join a residents&rsquo; group or to act as a provider. Adding a note to the record stays anonymous — no account needed.
+        You only need an account to join a residents&rsquo; group or to act as a provider. Adding a note to the record is always anonymous — no account needed.
       </Typography>
 
       <ToggleButtonGroup
