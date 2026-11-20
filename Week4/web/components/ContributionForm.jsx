@@ -26,9 +26,9 @@ export default function ContributionForm({ topics, provisionalLabel, onSubmitted
   const trimmed = body.trim();
   const bodyError =
     trimmed.length === 0
-      ? "Please describe what's happening before sending."
+      ? "Tell us what's happening before you send."
       : body.length > MAX_BODY
-        ? `Please keep it under ${MAX_BODY} characters.`
+        ? `That's a bit long — keep it under ${MAX_BODY} characters.`
         : "";
 
   async function handleSubmit(event) {
@@ -40,7 +40,7 @@ export default function ContributionForm({ topics, provisionalLabel, onSubmitted
     if (!consented) {
       setStatus({
         kind: "error",
-        message: "Please confirm you understand before sending.",
+        message: "Please check the box before you send.",
       });
       requestAnimationFrame(() => statusRef.current?.focus());
       return;
@@ -51,7 +51,7 @@ export default function ContributionForm({ topics, provisionalLabel, onSubmitted
       setBody("");
       setTopic("");
       setConsented(false);
-      setStatus({ kind: "success", message: "Thank you. Your note was added anonymously." });
+      setStatus({ kind: "success", message: "Thanks — your note was added anonymously." });
       onSubmitted?.();
     } catch (err) {
       setStatus({ kind: "error", message: err.message });
@@ -66,7 +66,7 @@ export default function ContributionForm({ topics, provisionalLabel, onSubmitted
         Share your experience
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        Your note is anonymous. We don&rsquo;t ask for your name, and no one can trace it back to you. Once sent, a note can&rsquo;t be edited or removed.
+        Your note is anonymous. We don&rsquo;t ask for your name, and no one can trace it back to you. Once you send it, you can&rsquo;t edit or remove it.
       </Typography>
 
       <Box component="form" onSubmit={handleSubmit} noValidate>
@@ -119,7 +119,7 @@ export default function ContributionForm({ topics, provisionalLabel, onSubmitted
               onChange={(e) => setConsented(e.target.checked)}
             />
           }
-          label="I understand this is a practice space with example data, and my note is sent without my name."
+          label="I understand this is a practice space with example data. My note is sent without my name."
           sx={{ mb: 2, display: "block" }}
         />
 

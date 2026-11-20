@@ -7,12 +7,12 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 function residentLine(row) {
-  if (row.residentCount === 0) return "No resident accounts on this topic yet.";
+  if (row.residentCount === 0) return "No residents have mentioned this yet.";
   if (row.masked) {
-    return `A few residents reported this (fewer than ${row.minDisplay}). The exact number is hidden to keep them safe.`;
+    return `A few residents mentioned this (fewer than ${row.minDisplay}). We hide the exact number to keep them safe.`;
   }
   const n = row.displayCount;
-  return `${n} resident account${n === 1 ? "" : "s"} on this topic.`;
+  return `${n} resident${n === 1 ? "" : "s"} mentioned this.`;
 }
 
 export default function GapView({ provider, rows, provisionalLabel }) {
@@ -22,22 +22,22 @@ export default function GapView({ provider, rows, provisionalLabel }) {
         Compare
       </Typography>
       <Typography color="text.secondary" sx={{ mb: 2 }}>
-        Residents&rsquo; accounts vs. the official record.
+        What residents say, next to the official record.
       </Typography>
 
       {!provider ? (
         <Typography color="text.secondary">
-          No provider is set up yet — nothing to compare yet.
+          No provider is set up yet, so there&rsquo;s nothing to compare.
         </Typography>
       ) : (
         <>
           <Typography color="text.secondary" sx={{ mb: 1 }}>
-            {provider.name} — the official record set beside what residents report.
+            {provider.name} — the official record, next to what residents report.
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-            This is not a score or a grade. It shows both sides and marks
-            where the official record and residents&rsquo; accounts don&rsquo;t agree.
-            Any numbers are self-reported context, not a grade. All data shown is example data.
+            This isn&rsquo;t a score or a grade. It just shows both sides and points out
+            where the official record and what residents say don&rsquo;t match.
+            Any numbers are what people reported themselves, not a grade. All data here is example data.
           </Typography>
 
           <Stack spacing={2}>
@@ -82,8 +82,8 @@ export default function GapView({ provider, rows, provisionalLabel }) {
 
           <Divider sx={{ my: 3 }} />
           <Typography variant="caption" color="text.secondary">
-            Small resident-account counts are hidden to protect residents — this
-            threshold is {provisionalLabel}. Raw accounts are never shown here;
+            We hide small counts to protect residents — this
+            threshold is {provisionalLabel}. The notes themselves are never shown here;
             only counts, computed on the server.
           </Typography>
         </>

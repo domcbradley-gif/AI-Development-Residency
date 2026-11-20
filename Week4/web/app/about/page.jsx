@@ -23,29 +23,29 @@ export default function AboutPage() {
         What happens when you post
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        Your note goes onto the public record for the community to see and build on.
-        It is <strong>not</strong> sent to your landlord or to any agency, and no
-        one promises it will be acted on. Its power is that it is on the record, in
-        the open, alongside other residents&rsquo; accounts.
+        Your note goes onto the public record, where the community can see it and build on it.
+        It <strong>doesn&rsquo;t</strong> go to your landlord or any agency, and no
+        one promises it&rsquo;ll be acted on. Its power is simply being on the record, in
+        the open, next to what other residents have shared.
       </Typography>
 
       <Typography component="h2" variant="h6" sx={{ mt: 3 }} gutterBottom>
         How anonymity works
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        We never ask for your name, and nothing identifying is attached to a note,
-        so a note can&rsquo;t be traced back to you. Because posts aren&rsquo;t tied
-        to an account, they also can&rsquo;t be edited or removed afterward.
+        We never ask for your name. Nothing about you is saved with your note,
+        so it can&rsquo;t be traced back to you. A note isn&rsquo;t linked
+        to any account, so it also can&rsquo;t be edited or removed later.
       </Typography>
 
       <Typography component="h2" variant="h6" sx={{ mt: 3 }} gutterBottom>
         Who runs it
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-        The record is community-controlled, not run by any landlord, funder, or
-        nonprofit. A residents&rsquo; group — made up of people who join themselves
-        — can withdraw or restore its support for a provider, and every such
-        decision is shown on the public record.
+        The community runs this — not any landlord, funder, or
+        nonprofit. A residents&rsquo; group (people who join on their own)
+        can withdraw or restore its support for a provider. Each
+        decision shows up on the public record.
       </Typography>
 
       <Typography component="h2" variant="h6" sx={{ mt: 3 }} gutterBottom>
@@ -53,13 +53,13 @@ export default function AboutPage() {
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
         To stay independent, the project takes no money from the housing providers
-        it holds accountable, and limits how much any single funder can give. See
+        it watches. It also limits how much any one funder can give. See
         the Funding page for the details.
       </Typography>
 
       <Divider sx={{ my: 3 }} />
       <Typography variant="caption" color="text.secondary">
-        This is a practice environment. All data shown is example data while the tool is
+        This is a practice space. All data shown is example data while the tool is
         being tested.
       </Typography>
     </Container>

@@ -102,3 +102,34 @@ Scored against the six criteria. Decision left blank — fill with keep / change
 - [ ] Implement the agreed changes, one screen at a time.
 - [ ] Relaunch (merge to main → Vercel).
 - [ ] Spot re-check the changed screens.
+
+---
+
+## Plain-language pass (2026-11-19)
+
+After the consistency fixes above, a second pass checked **reading level and voice** —
+the brand's **Everyman** archetype: plain, warm, human, approachable. Measured with
+Flesch–Kincaid grade level and reading ease.
+
+**Before:** overall ~grade 6.8. Several blocks were grade 8–13: Funding rules (13.3),
+About → independence (12.5), Provider subtitle (9.7), About → anonymity (9.2),
+Accountability intro (8.4).
+
+**After:** overall **grade 5.5** (reading ease 76); every block now grade 4–8.
+
+| Block | before | after |
+| --- | --- | --- |
+| Funding — rules | g13.3 | g6.3 |
+| About — independence | g12.5 | g6.3 |
+| About — anonymity | g9.2 | g5.5 |
+| About — who runs it | g9.6 | g7.1 |
+| Accountability — intro | g8.4 | g4.4 |
+| Home — consent | g7.2 | g3.7 |
+| **Overall** | **~g6.8** | **g5.5** |
+
+**How:** split long sentences (several were 24–27 words), swapped abstract phrasing for
+concrete ("self-reported context" → "what people reported themselves"; "holds
+accountable" → "watches"; "quorum" → "a minimum number of members"; "raw accounts" →
+"the notes themselves"), and warmed the smaller copy — success/error messages, empty
+states, and alerts — into a conversational, Everyman voice. Applied across 11 files in
+`Week4/web`. No automated test depends on the changed copy.

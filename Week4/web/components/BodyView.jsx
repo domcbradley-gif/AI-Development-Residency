@@ -24,7 +24,7 @@ export default function BodyView({
 
       {!body ? (
         <Typography color="text.secondary">
-          No residents&rsquo; group exists yet.
+          There&rsquo;s no residents&rsquo; group yet.
         </Typography>
       ) : (
         <Paper variant="outlined" sx={{ p: 3 }}>
@@ -37,7 +37,7 @@ export default function BodyView({
             </Typography>
           )}
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            To act, the group needs {body.quorum} members ({provisionalLabel}). Anyone can join — no landlord, funder, or nonprofit decides who is a member.
+            To act, the group needs {body.quorum} members ({provisionalLabel}). Anyone can join — no landlord, funder, or nonprofit decides who&rsquo;s in.
           </Typography>
 
           {user ? (
@@ -54,7 +54,7 @@ export default function BodyView({
                   sx={{ display: "flex", alignItems: "center", gap: 2, flexWrap: "wrap" }}
                 >
                   <Alert severity="success" sx={{ flexGrow: 1 }}>
-                    You are a member of this group.
+                    You&rsquo;re a member of this group.
                   </Alert>
                   <form action={leaveBody}>
                     <input type="hidden" name="bodyId" value={body.id} />

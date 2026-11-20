@@ -83,8 +83,8 @@ export default async function ProviderPage() {
   const independence = [
     { label: "Members join themselves; no landlord, funder, or nonprofit picks them", ok: true },
     { label: "No single funder is over the cap", ok: !funding.anyOverCap },
-    { label: "No money from the watched", ok: !funding.anyFromWatched },
-    { label: "A quorum is set for the residents' group", ok: Boolean(quorum && quorum >= 1) },
+    { label: "No money from the providers we watch", ok: !funding.anyFromWatched },
+    { label: "A minimum number of members is set for the residents' group", ok: Boolean(quorum && quorum >= 1) },
   ];
 
   return (
