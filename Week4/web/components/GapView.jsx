@@ -57,7 +57,7 @@ export default function GapView({ provider, rows, provisionalLabel }) {
                   </Typography>
                   {row.mismatch && (
                     <Chip
-                      label="Official record disagrees with residents"
+                      label="Residents disagree with the official record"
                       color="error"
                       variant="outlined"
                       size="small"

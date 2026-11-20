@@ -12,8 +12,7 @@ export const dynamic = "force-dynamic";
 export const metadata = {
   title: "Many Strong — share your housing experience",
   description:
-    "A community-owned space for residents to put their housing experience on " +
-    "the record. Practice environment — synthetic data only.",
+    "A community-owned place where residents can say what their housing is really like. A practice space with example data only.",
 };
 
 export default async function RootLayout({ children }) {
